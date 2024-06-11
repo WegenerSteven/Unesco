@@ -1,0 +1,143 @@
+*{
+    box-sizing: border-box;
+}
+:root{
+  --bg-color: #04AA6D;
+  --container-bg: #2834da;
+  --blue: #000fff;
+  --black:#130f40;
+}
+
+.btn{
+  margin-top: 1rem;
+  display: inline-block;
+  width: 100%;
+  padding: .8rem 3rem;
+  font-size: 1.7rem;
+  border-radius: .5rem;
+  background: var(--bg-color);
+  color: var(--black);
+  cursor: pointer;
+}
+.btn:hover{
+  background-color: rgb(43, 201, 148);;
+  color: #fff;
+}
+.project-container{
+  width: 76%;
+  margin: 0 auto; 
+}
+.contact__container {
+  background: #2e3267;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 4rem;
+  height: 45rem;
+  margin: 7rem auto;
+  border-radius: 1rem;
+}
+
+/*************************************************ASIDE***********************************************************/
+.contact__aside{
+  background: #6c63ff;
+  padding: 3rem;
+  border-radius: 1rem;
+  position: relative;
+  bottom: 10rem;
+  
+}
+
+.aside__image{
+  width: 12rem;
+  margin-bottom: 1rem;
+}
+
+.contact__aside h2{
+  text-align: left;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.contact__aside p{
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.contact__details li {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.contact__socials{
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 3rem;
+}
+
+.contact__socials a {
+  background: #424890;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  transition: all 400ms ease ;
+}
+
+.contact__socials a:hover{
+  background: transparent;
+}
+
+
+/*************************************************FORM***********************************************************/
+.contact__form{
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-right: 4rem;
+}
+
+.form__name{
+  display: flex;
+  gap: 1.2rem;
+}
+
+.contact__form input[type="text"] {
+  border-radius: 10px;
+  width: 50%;
+}
+
+.contact__form input, textarea{
+  width: 100%;
+  padding: 1rem;
+  background: #1f2641;
+  color: #fff;
+}
+
+  
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media (max-width:768px){
+  .contact__container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 4rem;
+  }
+}
+@media screen and (max-width: 600px) {
+  .column, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+  .aside__image{
+    width: 7rem;
+    margin-bottom: 1rem;
+  }
+  .contact__container {
+    display: block;
+  }
+  .contact{
+    height: 150vh;
+  }
+}

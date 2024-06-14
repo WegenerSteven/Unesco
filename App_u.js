@@ -46,6 +46,43 @@ about.addEventListener("click", function(e){
     element.classList.add("active")
     }
 });
+
+
+//subcribe button
+document.getElementById('subscribeBtn').addEventListener('click', function(event){
+    event.preventDefault();
+  
+    var email = document.getElementById('email').value;
+    var responseMessage = document.getElementById('responseMessage');
+  
+    if(validateEmail(email)){
+        //simulate an API request
+        fetch('http://localhost:3001/subscribe',{
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({email: email})
+        })
+        .then(response => response.json())
+        .then(data =>{
+            responseMessage.textContent = data.message;
+            responseMessage.style.color = 'green';
+            document.getElementById('subscribeForm').reset();
+        })
+        .catch(error =>{
+            responseMessage.textContent = 'An error occured. Please try again later.';
+            responseMessage.style.color = 'red';
+        });
+        }else{
+            responseMessage.textContent = 'Please Enter a valid email address';
+            responseMessage.style.color = 'red';
+    }   
+  });
+  
+  //function to validate email
+  function validateEmail(email){
+    var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      return re.test(email);
+  }
 /*
 
 //const express = require('express')

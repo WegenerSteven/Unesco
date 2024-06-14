@@ -20,23 +20,18 @@ loginBtn.addEventListener('click', () => {
 
     //Getting the form data
     const formData = new FormData(signUp);
-    const firstName = formData.get('firstName');
-    const lastName = formData.get('lastName');
-    const email = formData.get('email');
-    const regno = formData.get('regno');
-    const password = formData.get('password');
-
+    const data = Object.fromEntries(formData.entries());
 
     //Sending a POST Request
     /*The code sends a POST request to the server using the `fetch` API. The request
     is sent to the `/register` endpoint, which is assumed to be a server-side endpoint that handles user registration. */
     try{
-      const response = await fetch('/register',{
+      const response = await fetch('http://localhost:3001/signup',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({firstName, lastName, email, regno, password})
+        body: JSON.stringify(data)
   });
   if(response.ok){
     alert('User signed up succesfuly');
@@ -52,16 +47,16 @@ catch(error){
 logIn.addEventListener('submit', async (e) =>{
   e.preventDefault();
   const formData = new FormData(logIn);
-  const regno = formData.get('regno');
-  const password = formData.get('password');
+  const data = Object.fromEntries(formData.entries());
 
   try{
-    const response = await fetch('/login',{
+    const response = await fetch('http://localhost:3001/Sign-login/sign.css',{
       method: 'POST',
       headers: {
         'content-Type': 'application/json'
       },
-      body: JSON.stringify({regno, password})
+      body: JSON.stringify(data)
+      //body: JSON.stringify({regno, password})
     });
     if(response.ok){
       alert('Signin successful');

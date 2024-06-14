@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Home_u.css">
     <link rel="stylesheet"type ="text/css" href="Contact_u.css">
-    <link rel="stylesheet"type="text/css" href="login/login.css">
+   <!-- <link rel="stylesheet"type="text/css" href="login/login.css">-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -330,9 +330,13 @@
             <div class="box">
                 <h3>newsletter</h3>
                 <p>subscribe for latest updates</p>
+                <form action="" id="subscrbeForm">
                 <input type="email" placeholder="your email" id="email" class="email">
-                <input type="submit" value="subscribe" class="btn">
+                <input type="submit" value="subscribe" class="btn" id="subscribeBtn">
+            </form>
+                <p id="responseMessage"></p>
             </div>
+          
         </div>
 
         <div class="credit">created by <span>benaIct depertments</span> | &copy; all rights reserved </div>

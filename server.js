@@ -171,7 +171,7 @@ app.post('/login', (req, res) => {
 app.post('/reset-password', async (req, res) => {
     const { email, newPassword } = req.body;
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const sql = 'UPDATE members SET password = ? WHERE email = ?';
+    const sql = 'UPDATE members SET Password = ? WHERE email = ?';
 
     db.query(sql, [hashedPassword, email], (err, result) => {
         if (err) {

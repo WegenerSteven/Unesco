@@ -24,7 +24,7 @@
   color: #fff;
 }
 .project-container{
-  width: 76%;
+  width: 75%;
   margin: 0 auto; 
 }
 .contact__container {
@@ -33,7 +33,7 @@
   display: grid;
   grid-template-columns: 40% 60%;
   gap: 4rem;
-  height: 45rem;
+  height: 35rem;
   margin: 7rem auto;
   border-radius: 1rem;
 }
@@ -41,7 +41,7 @@
 /*************************************************ASIDE***********************************************************/
 .contact__aside{
   background: #6c63ff;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 1rem;
   position: relative;
   bottom: 10rem;
@@ -56,7 +56,7 @@
 .contact__aside h2{
   text-align: left;
   color: #fff;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .contact__aside p{
@@ -71,6 +71,12 @@
   align-items: center;
   color: #fff;
   margin-bottom: 1rem;
+}
+.contact__details li a{
+  color: #e9fcfc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 .contact__socials{
   display: flex;
@@ -141,3 +147,8 @@
     height: 150vh;
   }
 }
+@media (max-width: 600px ){
+  slider-slide{
+    Display:block; 
+    }
+  }

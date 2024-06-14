@@ -550,3 +550,8 @@ section{
         display: block;
     }
 }
+@media (max-width: 600px ){
+    slider-slide{
+      Display:block; 
+      }
+    }

@@ -1,3 +1,4 @@
+
 //Navbar toggle
 let menu = document.querySelector('.navbar');
 
@@ -83,28 +84,21 @@ document.getElementById('subscribeBtn').addEventListener('click', function(event
     var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
       return re.test(email);
   }
-/*
 
-//const express = require('express')
-//const bodyparser = require('bodyparser')
-const mysql = require('mysql');
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxXi_jPHTtAbTRf7LiV4ZrEY0Nc0x2mxkerfoLQ57Yog58SXwaJlEPQCykSYUm5WmJo/exec'
+  const form = document.forms['submit-to-google-sheet']
 
+  const msg = document.getElementById("msg")
 
-//create a mysql connection
-const db = mysql.createConnection({
-    host:'local host',
-    user:'Wegenersteven',
-    password:'40300912',
-    database:'Unesco'
-}); 
-
-//connect to mysql Database
-
-db.connect((err)=>{
-    if(err){
-        console.error('Error connecting to the Mysql', err);
-        return;
-        }
-    console.log('Connected to MySql!');
-});
-*/
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        msg.innerHTML = "Message sent successfully!"
+        setTimeout(function(){
+          msg.innerHTML = ""
+        }, 5000)   
+        form.reset();
+      })
+      .catch(error => console.error('Error!', error.message))
+  })

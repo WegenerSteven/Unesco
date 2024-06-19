@@ -145,10 +145,10 @@ app.post('/signup', async (req, res) => {
 
 //login route
 app.post('/login', (req, res) => {
-    const { regno, password } = req.body;
-    const sql = 'SELECT * FROM members WHERE Reg_No = ?';
+    const { Reg_No, Password } = req.body;
+    const sql = 'SELECT * FROM members WHERE Reg_No = ? AND Password = ?';
 
-    db.query(sql, [regno], async (err, results) => {
+    db.query(sql, [Reg_No], async (err, results) => {
         if (err) {
             console.error(err);
             res.status(500).json({ message: 'Error logging in' });
@@ -157,7 +157,7 @@ app.post('/login', (req, res) => {
         }
         else {
             const member = results[0];
-            const match = await bcrypt.compare(password, member.password);
+            const match = await bcrypt.compare(Password, member.Password);
             if (match) {
                 res.status(200).json({ message: 'Login successful' });
             } else {

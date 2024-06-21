@@ -26,7 +26,7 @@ loginBtn.addEventListener('click', () => {
     /*The code sends a POST request to the server using the `fetch` API. The request
     is sent to the `/register` endpoint, which is assumed to be a server-side endpoint that handles user registration. */
     try{
-      const response = await fetch('http://localhost:3001/signup',{
+      const response = await fetch('/signup',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ logIn.addEventListener('submit', async (e) =>{
   const data = Object.fromEntries(formData.entries());
 
   try{
-    const response = await fetch('http://localhost:3001/Sign-login/sign.css',{
+    const response = await fetch('http://localhost:3001/signin',{
       method: 'POST',
       headers: {
         'content-Type': 'application/json'

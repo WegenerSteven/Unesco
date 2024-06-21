@@ -10,11 +10,18 @@ const {check} = require('express-validator');
 const app = express();
 const port = 3001;
 
+//middleware to parse incoming request bodies/ JSON data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
+
 
 
 //create a mysql connection
 const db = mysql.createConnection({
-    host:'127.0.0.1',
+    host:'localhost',
     user:'root',
     password:'40300912',
     database:'Unesco'
@@ -33,22 +40,13 @@ db.connect((err)=>{
 //Serve static files from the default directory
 app.use(express.static(__dirname));
 
-
-//middleware to parse incoming request bodies/ JSON data
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({extended: true}));
-
-
 //Define a test route
 app.get('/',(req, res) =>{
     res.sendFile(__dirname + '/Home_u.html');
 });
 
 //Define a User representation for clarity
-const member = {
+/*const member = {
     tableName: 'members',
     createMember: function(newMember, callback){
         connection.query('INSERT INTO' +this.tableName + 'SET ?', newMember, callback);
@@ -65,7 +63,7 @@ const member = {
     getMemberByRegno: function(regno, callback){
         connection.query('SELECT * FROM' + this.tableName + 'WHERE regno = ?', regno, callback);
     },
-}
+}*/
 
 //Registration route
 /*app.post('/register', [
@@ -129,41 +127,44 @@ const member = {
 //signup route
 app.post('/signup', async (req, res) => {
     const { firstName, lastName, email, regno, password } = req.body;
+
+    //hash the password 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const sql = 'INSERT INTO members (First_Name, Second_Name, email, Reg_No, Password) VALUES (?, ?, ?, ?, ?)';
-    
-    db.query(sql, [firstName, lastName, email, regno, hashedPassword], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ message: 'Error registering user' });
-        } else {
-            res.status(200).json({ message: 'User registered successfully' });
-        }
-    });
+
+    const member = {firstName, lastName, email, regno, password: hashedPassword};
+    const query = 'INSERT INTO members SET ?';
+        db.query(query, member, (err, result) => {
+            if (err) {
+               console.error(err);
+               res.status(500).json({ message: 'Error registering user' });
+            } else {
+               res.status(200).json({ message: 'User registered successfully' });
+            }
+         });         
 });
 
 
 //login route
 app.post('/login', (req, res) => {
     const { Reg_No, Password } = req.body;
-    const sql = 'SELECT * FROM members WHERE Reg_No = ? AND Password = ?';
+    const query = 'SELECT * FROM members WHERE Reg_No = ?';
 
-    db.query(sql, [Reg_No], async (err, results) => {
+    db.query(query, [Reg_No], async (err, results) => {
         if (err) {
             console.error(err);
             res.status(500).json({ message: 'Error logging in' });
-        } else if (results.length === 0) {
-            res.status(400).json({ message: 'User not found' });
         }
-        else {
+        if (results.length === 0) {
+            res.status(400).json({ message: 'User not found' });
+        }  
             const member = results[0];
+            //compare passwords
             const match = await bcrypt.compare(Password, member.Password);
             if (match) {
                 res.status(200).json({ message: 'Login successful' });
-            } else {
+            } 
                 res.status(400).json({ message: 'Incorrect password' });
-            }
-        }
+        
     });
 });
 
@@ -254,9 +255,9 @@ function sendNotificationEmail(subscriberEmail){
     });
 }
 //start the server
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () =>{
-    console.log(`Server is running on port ${PORT}`);
+//const PORT = process.env.PORT || 3001;
+app.listen(port, () =>{
+    console.log(`Server is running on port ${port}`);
 });
 
 /*process.on('SIGINT', () =>{

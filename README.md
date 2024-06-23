@@ -10,7 +10,7 @@ npm install express mysql ejs bcryptjs express-session express-validator
 ## import the mysql file in database
 ## to run the project locally
 ```bash
-node.js
+node server.js
 ```
 ## create a database
 ```bash

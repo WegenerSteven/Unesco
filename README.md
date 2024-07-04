@@ -14,15 +14,18 @@ node server.js
 ```
 ## create a database
 ```bash
-CREATE DATABASE Unesco;
-use Unesco;
+CREATE DATABASE unesco;
+
+USE unesco;
+
 CREATE TABLE members (
-    First_Name VARCHAR(255) NOT NULL,
-    Last_Name VARCHAR(255) NOT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    REg_No INT PRIMARY KEY,
-    Password VARCHAR(255) NOT NULL
+    regno INT NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
 );
+
 ```
 
 ####

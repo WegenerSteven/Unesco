@@ -45,85 +45,6 @@ app.get('/',(req, res) =>{
     res.sendFile(__dirname + '/Home_u.html');
 });
 
-//Define a User representation for clarity
-/*const member = {
-    tableName: 'members',
-    createMember: function(newMember, callback){
-        connection.query('INSERT INTO' +this.tableName + 'SET ?', newMember, callback);
-    },
-    getMemberByFirstname: function(firstName, callback){
-        connection.query('SELECT * FROM' + this.tableName + 'WHERE firstName = ?', firstName, callback);
-    },
-    getMemberByLastname: function(lastName, callback){
-        connection.query('SELECT * FROM' + this.tableName + 'WHERE lastName = ?', lastName, callback);
-    },
-    getMemberByEmail: function(email, callback){
-        connection.query('SELECT * FROM' + this.tableName + 'WHERE email = ?', email, callback);
-    },
-    getMemberByRegno: function(regno, callback){
-        connection.query('SELECT * FROM' + this.tableName + 'WHERE regno = ?', regno, callback);
-    },
-}*/
-
-//Registration route
-/*app.post('/register', [
-    //validate fields
-    check('firstName').isLength({min: 3}).withMessage('Please enter a valid first name'),
-    check('lastName').isLength({min: 3}).withMessage('Please enter a valid last name'),
-    check('email').isEmail().withMessage('Please enter a valid email address'),
-    check('regno').isLength({min: 3}).withMessage('Please enter a valid registration number'),
-    check('password').isLength({min: 6}).withMessage('Please enter a valid password'),
-
-    //custom validation to check if regno are unique
-    check('regno').custom(async (value)=>{
-        const member = await member.getMemberByRegno(value);
-        if(member){
-            throw new Error('Registration number already exists');
-        }
-    }),
-], async (req, res) =>{
-    //check for validation errors
-    const validationResult = (req) =>{
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array()});
-        }
-        return [];
-    }
-   /* const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
-    }
-
-    const {firstName, lastName, email, regno, password} = req.body;
-    const member =(firstName, lastName, email, regno, password);
-    res.send(member);
-
-    //hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-    //create a new user object
-    const newMember = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        regno: req.body.regno,
-        password: hashedPassword
-    };
-
-    // Insert member into MySQL
-
-    member.createMember(newMember,(error, results, fields) =>{
-        if(error){
-            console.error('Error inserting member:' + error.message);
-            return res.status(500).json({error: error.message});
-        }
-        console.log('Inserted a new member with id ' + results.insertId);
-        res.status(201).json(newMember);
-    });
-}); */
-
 //signup route
 app.post('/signup', async (req, res) => {
     const { firstName, lastName, email, regno, password } = req.body;
@@ -146,10 +67,10 @@ app.post('/signup', async (req, res) => {
 
 //login route
 app.post('/login', (req, res) => {
-    const { Reg_No, Password } = req.body;
+    const { regno, password } = req.body;
     const query = 'SELECT * FROM members WHERE Reg_No = ?';
 
-    db.query(query, [Reg_No], async (err, results) => {
+    db.query(query, [regno], async (err, results) => {
         if (err) {
             console.error(err);
             res.status(500).json({ message: 'Error logging in' });
@@ -159,7 +80,7 @@ app.post('/login', (req, res) => {
         }  
             const member = results[0];
             //compare passwords
-            const match = await bcrypt.compare(Password, member.Password);
+            const match = await bcrypt.compare(password, member.password);
             if (match) {
                 res.status(200).json({ message: 'Login successful' });
             } 
@@ -172,7 +93,7 @@ app.post('/login', (req, res) => {
 app.post('/reset-password', async (req, res) => {
     const { email, newPassword } = req.body;
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const sql = 'UPDATE members SET Password = ? WHERE email = ?';
+    const sql = 'UPDATE members SET password = ? WHERE email = ?';
 
     db.query(sql, [hashedPassword, email], (err, result) => {
         if (err) {

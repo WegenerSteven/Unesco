@@ -1,3 +1,35 @@
+## Dependencies
+### Initialize a new Node.js project.
+```bash
+npm init -y
+```
+### Install necessary dependencies.
+```bash
+npm install express mysql ejs bcryptjs express-session express-validator
+```
+## import the mysql file in database
+## to run the project locally
+```bash
+node server.js
+```
+## create a database
+```bash
+CREATE DATABASE unesco;
+
+USE unesco;
+
+CREATE TABLE members (
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    regno INT NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+```
+
+####
+
 #  Software Requirements Specification (SRS) Document
 ##  KYU UNESCO Club Website
 ________________________________________
